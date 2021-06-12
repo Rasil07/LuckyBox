@@ -6,8 +6,7 @@ import Navbar from '../../layouts/Navbar';
 import Container from '@material-ui/core/Container';
 import { BrowserRouter as Router, Switch, useHistory, Route } from 'react-router-dom';
 
-const UnlockWallet = lazy(() => import('../wallet/unlock'));
-
+const CreateWallet = lazy(() => import('../wallet/create'));
 function Main() {
   const { initApp, wallet, hasWallet, isLoading } = useContext(AppContext);
   const history = useHistory();
@@ -24,7 +23,7 @@ function Main() {
           <p>Loading</p>
         ) : (
           <Switch>
-            {!hasWallet ? (
+            {hasWallet ? (
               AppRoutes.map((prop, key) => {
                 return (
                   <PrivateRoute
@@ -34,12 +33,11 @@ function Main() {
                     component={prop.component}
                     wallet={wallet}
                     walletRequired={prop.walletRequired}
-                    hasWallet={hasWallet}
                   />
                 );
               })
             ) : (
-              <Route exact path="/" component={UnlockWallet} />
+              <Route exact={true} path="/" component={CreateWallet} />
             )}
           </Switch>
         )}

@@ -1,19 +1,18 @@
 import { lazy } from 'react';
 
-const CreateWallet = lazy(() => import('../modules/wallet/create'));
+const UnlockWallet = lazy(() => import('../modules/wallet/unlock'));
 
 const Home = lazy(() => import('../modules/Main/Home'));
 export const AppRoutes = [
   {
-    name: 'Create Wallet',
-    path: '/create-wallet',
+    name: 'Unlock Wallet',
+    path: '/unlock-wallet',
     walletRequired: false,
-    component: CreateWallet,
+    component: UnlockWallet,
   },
-
   {
     name: 'Home',
-    path: '/home',
+    path: '/',
     walletRequired: true,
     component: Home,
   },
