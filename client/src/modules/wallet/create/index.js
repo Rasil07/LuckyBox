@@ -109,7 +109,8 @@ function CreateWallet() {
       if (res) {
         const { wallet, encryptedWallet } = res;
         await DataService.save('wallet', encryptedWallet);
-        setWallet(wallet);
+        await setWallet(wallet);
+        history.push('/');
       }
     } catch (err) {
       console.log('Something went wrong');
@@ -127,6 +128,7 @@ function CreateWallet() {
 
         await DataService.save('wallet', encryptedWallet);
         await setWallet(wallet);
+        history.push('/');
       }
     } catch (err) {
       console.log('Something went wrong');

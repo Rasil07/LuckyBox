@@ -16,33 +16,36 @@ function Main() {
     })();
   }, [initApp]);
   return (
-    <Container>
+    <>
       <Navbar />
-      <Router history={history}>
-        {isLoading ? (
-          <p>Loading</p>
-        ) : (
-          <Switch>
-            {hasWallet ? (
-              AppRoutes.map((prop, key) => {
-                return (
-                  <PrivateRoute
-                    exact={true}
-                    path={prop.path}
-                    key={key}
-                    component={prop.component}
-                    wallet={wallet}
-                    walletRequired={prop.walletRequired}
-                  />
-                );
-              })
-            ) : (
-              <Route exact={true} path="/" component={CreateWallet} />
-            )}
-          </Switch>
-        )}
-      </Router>
-    </Container>
+
+      <Container>
+        <Router history={history}>
+          {isLoading ? (
+            <p>Loading</p>
+          ) : (
+            <Switch>
+              {hasWallet ? (
+                AppRoutes.map((prop, key) => {
+                  return (
+                    <PrivateRoute
+                      exact={true}
+                      path={prop.path}
+                      key={key}
+                      component={prop.component}
+                      wallet={wallet}
+                      walletRequired={prop.walletRequired}
+                    />
+                  );
+                })
+              ) : (
+                <Route exact={true} path="/" component={CreateWallet} />
+              )}
+            </Switch>
+          )}
+        </Router>
+      </Container>
+    </>
   );
 }
 
