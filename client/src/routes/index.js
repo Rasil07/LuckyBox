@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 
 const CreateWallet = lazy(() => import('../modules/wallet/create'));
+
 const Home = lazy(() => import('../modules/Main/Home'));
 export const AppRoutes = [
   {
@@ -9,9 +10,10 @@ export const AppRoutes = [
     walletRequired: false,
     component: CreateWallet,
   },
+
   {
     name: 'Home',
-    path: '/',
+    path: '/home',
     walletRequired: true,
     component: Home,
   },

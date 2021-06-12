@@ -13,7 +13,6 @@ export const DataService = {
   save(name, data) {
     return db.data.put({ name, data });
   },
-
   async get(name) {
     let obj = await db.data.get(name);
     if (!obj) return null;
@@ -84,6 +83,10 @@ export const DataService = {
   async addAsset(symbol, name) {
     let asset = await this.getAsset('default');
     if (!asset) return db.assets.add({ address: 'default', symbol, name, decimal: 18, balance: 0 });
+  },
+  async addERCAsset(symbol, name) {
+    let asset = await this.getAsset('erc20');
+    if (!asset) return db.assets.add({ address: 'erc20', symbol, name, decimal: 18, balance: 0 });
   },
 
   async addMultiAssets(assets) {

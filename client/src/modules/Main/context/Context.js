@@ -10,6 +10,7 @@ const initialState = {
   network: null,
   wallet: null,
   hasWallet: false,
+  isLoading: false,
 };
 
 export const AppContext = createContext(initialState);
@@ -18,15 +19,16 @@ export const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   const initApp = useCallback(async () => {
-    console.log('initapp ran');
-    DataService.addAsset(ETH_TOKEN.SYMBOL, ETH_TOKEN.NAME);
-    DataService.addAsset(RBT_TOKEN.SYMBOL, RBT_TOKEN.NAME);
+    dispatch({ type: ACTIONS.SET_LOADING, data: true });
+    await DataService.addDefaultAsset(ETH_TOKEN.SYMBOL, ETH_TOKEN.NAME);
+    await DataService.addERCAsset(RBT_TOKEN.SYMBOL, RBT_TOKEN.NAME);
     //TODO: in future check version and add action if the version is different.
     DataService.save('version', APP_CONSTANTS.VERSION);
     let data = await DataService.initAppData();
     data.hasWallet = data.wallet === null ? false : true;
     if (!data.hasWallet) localStorage.removeItem('address');
     dispatch({ type: ACTIONS.APP_INIT, data });
+    dispatch({ type: ACTIONS.SET_LOADING, data: false });
   }, [dispatch]);
   function setHasWallet(hasWallet) {
     dispatch({ type: ACTIONS.SET_WALLET_PRESENT, data: hasWallet });
@@ -47,6 +49,7 @@ export const AppContextProvider = ({ children }) => {
         hasWallet: state.hasWallet,
         network: state.network,
         wallet: state.wallet,
+        isLoading: state.isLoading,
         initApp,
         setHasWallet,
         setWallet,

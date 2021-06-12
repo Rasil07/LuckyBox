@@ -14,6 +14,12 @@ export default function reducer(state, action) {
         ...state,
         network: action.data,
       };
+    case ACTIONS.SET_LOADING: {
+      return {
+        ...state,
+        isLoading: action.data,
+      };
+    }
 
     case ACTIONS.SET_WALLET:
       return {
